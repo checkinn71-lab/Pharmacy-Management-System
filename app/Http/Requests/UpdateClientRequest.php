@@ -29,10 +29,10 @@ class UpdateClientRequest extends FormRequest
 
             'avatar_image' => ['image', 'mimes:jpeg,png', 'max:2048'],
 
-            // National ID (12 digits)
+            // National ID (Sri Lankan NIC - 13 digits)
             'id' => [
                 'required',
-                'digits:12',
+                'digits:13',
                 Rule::unique('clients', 'id')->ignore($this->id)
             ],
 
@@ -42,7 +42,6 @@ class UpdateClientRequest extends FormRequest
                 'regex:/^(0\\d{9}|\\+94\\d{9})$/'
             ],
 
-            // Optional password update
             'password' => ['nullable', 'min:6', 'confirmed'],
         ];
     }
