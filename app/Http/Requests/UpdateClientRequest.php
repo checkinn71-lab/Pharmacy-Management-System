@@ -17,7 +17,11 @@ class UpdateClientRequest extends FormRequest
         return [
             'name' => ['required', 'min:3'],
 
-            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($this->user_id)],
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users', 'email')->ignore($this->user_id)
+            ],
 
             'gender' => ['required', 'in:Male,Female'],
 
@@ -25,13 +29,21 @@ class UpdateClientRequest extends FormRequest
 
             'avatar_image' => ['image', 'mimes:jpeg,png', 'max:2048'],
 
-            // ✅ synced National ID
-            'id' => ['required', 'digits:12', Rule::unique('clients', 'id')->ignore($this->id)],
+            // National ID (12 digits)
+            'id' => [
+                'required',
+                'digits:12',
+                Rule::unique('clients', 'id')->ignore($this->id)
+            ],
 
-            // ✅ synced phone validation
-            'phone' => ['required', 'regex:/^(?:0\\d{9}|\\+94\\d{9})$/'],
+            // Phone validation (Sri Lanka)
+            'phone' => [
+                'required',
+                'regex:/^(0\\d{9}|\\+94\\d{9})$/'
+            ],
 
-            'email_verified_at' => ['nullable', 'date_format:Y-m-d H:i:s'],
+            // Optional password update
+            'password' => ['nullable', 'min:6', 'confirmed'],
         ];
     }
 }
