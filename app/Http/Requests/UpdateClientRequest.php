@@ -7,17 +7,11 @@ use Illuminate\Validation\Rule;
 
 class UpdateClientRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize()
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     */
     public function rules()
     {
         return [
@@ -31,10 +25,10 @@ class UpdateClientRequest extends FormRequest
 
             'avatar_image' => ['image', 'mimes:jpeg,png', 'max:2048'],
 
-            // ✅ SYNCED: National ID (12 digits)
+            // ✅ synced National ID
             'id' => ['required', 'digits:12', Rule::unique('clients', 'id')->ignore($this->id)],
 
-            // ✅ SYNCED: Phone (+94 optional OR 0XXXXXXXXX)
+            // ✅ synced phone validation
             'phone' => ['required', 'regex:/^(?:0\\d{9}|\\+94\\d{9})$/'],
 
             'email_verified_at' => ['nullable', 'date_format:Y-m-d H:i:s'],
